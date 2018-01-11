@@ -1,0 +1,41 @@
+{
+  "project_info": {
+    "project_number": "52142198295",
+    "firebase_url": "https://say-hello-25319.firebaseio.com",
+    "project_id": "say-hello-25319"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:52142198295:android:180e637bbb559c2c",
+        "android_client_info": {
+          "package_name": "com.rupp.yonchando.sayhello"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "52142198295-b052qhmfdpnkb707o3ur75eqp1rsda9l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBIgUWpLSSEqK796WeQrtF74K224TfIr2o"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
