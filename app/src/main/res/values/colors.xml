@@ -4,4 +4,10 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="colorGrey">#CCC</color>
+    <color name="colorGreyDark">#737272</color>
+    <color name="colorInfo">#5bc0de</color>
+    <color name="colorSuccess">#5cb85c</color>
+    <color name="colorSuccessHover">#449d44</color>
+    <color name="colorWarning">#f0ad4e</color>
+    <color name="colorDanger">#d9534f</color>
 </resources>
