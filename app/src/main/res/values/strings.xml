@@ -1,4 +1,9 @@
 <resources>
+    <!-- FaceBook -->
+    <string name="facebook_app_id" translatable="false">161404327831584</string>
+    <string name="fb_login_protocol_scheme" translatable="false">fb161404327831584</string>
+    <!--// END Facebook-->
+
     <string name="app_name">SayHello</string>
     <string name="username">Username</string>
     <string name="password">Password</string>
