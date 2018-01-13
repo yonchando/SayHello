@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    style="@style/background"
     tools:context="com.rupp.yonchando.sayhello.RegisterActivity">
 
     <ScrollView
@@ -15,7 +16,7 @@
             android:layout_height="match_parent">
 
             <ImageView
-                android:id="@+id/imageView4"
+                android:id="@+id/imageViewLogo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
@@ -30,40 +31,40 @@
                 app:layout_constraintVertical_bias="0.19"
                 tools:ignore="ContentDescription" />
 
-            <EditText
-                android:id="@+id/editTextUsername"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                android:background="@drawable/edit_text"
-                android:drawableLeft="@drawable/ic_username"
-                android:drawablePadding="5dp"
-                android:drawableStart="@drawable/ic_username"
-                android:ems="10"
-                android:hint="@string/username"
-                android:inputType="textPersonName"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.503"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView4" />
+            <!--<EditText-->
+                <!--android:id="@+id/editTextUsername"-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginEnd="8dp"-->
+                <!--android:layout_marginStart="8dp"-->
+                <!--android:background="@drawable/edit_text"-->
+                <!--android:drawableLeft="@drawable/ic_username"-->
+                <!--android:drawablePadding="5dp"-->
+                <!--android:drawableStart="@drawable/ic_username"-->
+                <!--android:ems="10"-->
+                <!--android:hint="@string/username"-->
+                <!--android:inputType="textPersonName"-->
+                <!--app:layout_constraintEnd_toEndOf="parent"-->
+                <!--app:layout_constraintHorizontal_bias="0.503"-->
+                <!--app:layout_constraintStart_toStartOf="parent"-->
+                <!--app:layout_constraintTop_toBottomOf="@+id/imageViewLogo" />-->
 
-            <EditText
-                android:id="@+id/editTextPhoneNumber"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/edit_text"
-                android:drawableLeft="@drawable/ic_phone_number"
-                android:drawablePadding="5dp"
-                android:ems="10"
-                android:hint="@string/phone_number"
-                android:inputType="phone"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editTextUsername" />
+            <!--<EditText-->
+                <!--android:id="@+id/editTextPhoneNumber"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginEnd="8dp"-->
+                <!--android:layout_marginStart="8dp"-->
+                <!--android:layout_marginTop="8dp"-->
+                <!--android:background="@drawable/edit_text"-->
+                <!--android:drawableLeft="@drawable/ic_phone_number"-->
+                <!--android:drawablePadding="5dp"-->
+                <!--android:ems="10"-->
+                <!--android:hint="@string/phone_number"-->
+                <!--android:inputType="phone"-->
+                <!--app:layout_constraintEnd_toEndOf="parent"-->
+                <!--app:layout_constraintStart_toStartOf="parent"-->
+                <!--app:layout_constraintTop_toBottomOf="@+id/editTextUsername" />-->
 
             <EditText
                 android:id="@+id/editTextEmail"
@@ -81,7 +82,7 @@
                 android:inputType="textEmailAddress"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editTextPhoneNumber" />
+                app:layout_constraintTop_toBottomOf="@+id/imageViewLogo" />
 
             <EditText
                 android:id="@+id/editTextPassword"
@@ -111,7 +112,7 @@
                 android:layout_marginTop="8dp"
                 android:background="@drawable/edit_text"
                 android:drawableLeft="@drawable/ic_confirm_password"
-                android:drawablePadding="5dp"
+                android:drawablePadding="8dp"
                 android:drawableStart="@drawable/ic_confirm_password"
                 android:ems="10"
                 android:hint="@string/confirm_password"

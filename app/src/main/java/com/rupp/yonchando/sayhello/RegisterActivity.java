@@ -15,6 +15,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.Objects;
+
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Button buttonRegister;
@@ -22,6 +24,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private EditText editTextPassword;
     private ProgressDialog progressDialog;
     private FirebaseAuth firebaseAuth;
+    private EditText editTextConfirmPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,15 +34,15 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         buttonRegister = findViewById(R.id.buttonRegister);
         editTextEmail = findViewById(R.id.editTextEmail);
         editTextPassword = findViewById(R.id.editTextPassword);
+        editTextConfirmPassword = findViewById(R.id.editTextComfirmPassword);
         progressDialog = new ProgressDialog(this);
         firebaseAuth = FirebaseAuth.getInstance();
 
         buttonRegister.setOnClickListener(this);
     }
 
-    private void startActivityLogin()
-    {
-
+    private void startActivityLogin() {
+        hideProgressDialog();
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
     }
@@ -47,40 +50,67 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     @Override
     public void onClick(View view) {
 
-        if(view == buttonRegister){
+        if (view == buttonRegister) {
             userRegister();
         }
     }
 
+    public void showProgressDialog() {
+        progressDialog.setMessage("Register Processing..");
+        progressDialog.show();
+    }
+
+    public void hideProgressDialog() {
+        progressDialog.hide();
+    }
+
     private void userRegister() {
-        String email = editTextEmail.getText().toString().trim();
-        String password = editTextPassword.getText().toString().trim();
+        final String email = editTextEmail.getText().toString().trim();
+        final String password = editTextPassword.getText().toString().trim();
+        String confirmPassword = editTextConfirmPassword.getText().toString().trim();
 
         // User Not Input Email Show Message
-        if(email.isEmpty()){
+        if (email.isEmpty()) {
             Toast.makeText(this, "Please enter Email", Toast.LENGTH_SHORT).show();
+            return;
         }
 
         // User Not Input Password Show Message
-        if(password.isEmpty()){
+        if (password.isEmpty()) {
             Toast.makeText(this, "Please enter Password", Toast.LENGTH_SHORT).show();
+            return;
         }
 
-        progressDialog.setMessage("Register Processing..");
-        progressDialog.show();
+        if (!password.equals(confirmPassword)) {
+            Toast.makeText(this, "Password not match", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
-        firebaseAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+        showProgressDialog();
+        firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                if(task.isComplete()){
-                    startActivityLogin();
+                if (task.isComplete()) {
+                    loginAfterRegister(email, password);
                     Toast.makeText(RegisterActivity.this, "Register Success", Toast.LENGTH_SHORT).show();
-                }else {
+                } else {
                     Toast.makeText(RegisterActivity.this, "Register Fail", Toast.LENGTH_SHORT).show();
                 }
             }
         });
+    }
 
-
+    public void loginAfterRegister(String email, String password) {
+        firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (task.isComplete()) {
+                    startActivity(new Intent(RegisterActivity.this, MainActivity.class));
+                } else {
+                    Toast.makeText(RegisterActivity.this, "Authentication failed. Please try again", Toast.LENGTH_SHORT).show();
+                    startActivityLogin();
+                }
+            }
+        });
     }
 }
