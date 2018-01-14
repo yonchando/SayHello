@@ -19,11 +19,11 @@ public class StartUpActivity extends AppCompatActivity {
             public void run() {
                 startLoginActivity();
             }
-        }, 2000);
+        }, 1000);
     }
 
     private void startLoginActivity() {
-        Intent intent = new Intent(this,LoginActivity.class);
+        Intent intent = new Intent(this,MainActivity.class);
         startActivity(intent);
     }
 }
