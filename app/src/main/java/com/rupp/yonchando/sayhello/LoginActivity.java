@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -43,6 +44,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private Button buttonRegister;
     private EditText editTextEmail;
     private EditText editTextPassword;
+    private CheckBox checkBoxRememberMe;
     private FirebaseAuth firebaseAuth;
     private ProgressDialog progressDialog;
     private CallbackManager callbackManager;
@@ -59,6 +61,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         buttonRegister = findViewById(R.id.buttonRegister);
         editTextEmail = findViewById(R.id.editTextEmail);
         editTextPassword = findViewById(R.id.editTextPassword);
+//        checkBoxRememberMe = findViewById(R.id.checkBoxRemember);
         progressDialog = new ProgressDialog(this);
 
         firebaseAuth = FirebaseAuth.getInstance();
