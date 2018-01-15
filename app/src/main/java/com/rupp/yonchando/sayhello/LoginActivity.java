@@ -33,8 +33,11 @@ import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Arrays;
+import java.util.HashMap;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -55,10 +58,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private GoogleSignInClient googleSignInClient;
     private Toolbar toolbar;
 
+    private FirebaseDatabase database;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        database = FirebaseDatabase.getInstance();
         buttonLogin = findViewById(R.id.buttonLogin);
         buttonRegister = findViewById(R.id.buttonRegister);
         editTextEmail = findViewById(R.id.editTextEmail);
@@ -236,9 +243,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG, "signInWithCredential:success");
                             FirebaseUser user = firebaseAuth.getCurrentUser();
-                            updateUI(user);
+                            Log.d("User", user != null ? user.toString() : null);
+                            Log.d(TAG, "signInWithCredential:success");
+                            insertUserInfoToDatabase();
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
@@ -265,8 +273,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG_GOOGLE, "signInWithCredential:success");
-                            FirebaseUser user = firebaseAuth.getCurrentUser();
-                            updateUI(user);
+                            insertUserInfoToDatabase();
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG_GOOGLE, "signInWithCredential:failure", task.getException());
@@ -277,5 +284,31 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         // ...
                     }
                 });
+    }
+
+    private void insertUserInfoToDatabase() {
+        final FirebaseUser user = firebaseAuth.getCurrentUser();
+        if (user != null) {
+            String uid = user.getUid();
+            String username = user.getDisplayName();
+            String phoneNumber = user.getPhoneNumber();
+            final String email = editTextEmail.getText().toString().trim();
+            final String password = editTextPassword.getText().toString().trim();
+            DatabaseReference mReference = database.getReference().child("Users").child(uid);
+            HashMap<String, String> hashMap = new HashMap<>();
+
+            hashMap.put("username", username);
+            hashMap.put("email", user.getEmail());
+            hashMap.put("photo", "@string/ic_profile_image_default");
+            hashMap.put("phoneNumber", phoneNumber);
+            hashMap.put("status", "use");
+            mReference.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    updateUI(user);
+                    Toast.makeText(LoginActivity.this, "Register Success", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
     }
 }

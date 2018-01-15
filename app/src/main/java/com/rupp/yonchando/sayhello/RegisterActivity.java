@@ -157,6 +157,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             HashMap<String, String> hashMap = new HashMap<>();
 
             hashMap.put("username", username);
+            hashMap.put("email", user.getEmail());
+            hashMap.put("photo","@string/ic_profile_image_default");
             hashMap.put("phoneNumber", phoneNumber);
             hashMap.put("status", "use");
             mReference.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
