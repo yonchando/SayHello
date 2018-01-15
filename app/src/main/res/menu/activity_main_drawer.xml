@@ -5,9 +5,13 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_send"
+            android:id="@+id/nav_chat"
             android:icon="@drawable/ic_menu_send"
-            android:title="@string/sent_user" />
+            android:title="@string/chat"/>
+        <item
+            android:id="@+id/nav_friend"
+            android:icon="@drawable/ic_person_add"
+            android:title="@string/friend" />
 
         <item
 
@@ -15,9 +19,9 @@
             android:icon="@drawable/ic_group_add"
             android:title="@string/new_group" />
         <item
-            android:id="@+id/nav_setting"
+            android:id="@+id/nav_account_setting"
             android:icon="@drawable/ic_setting"
-            android:title="@string/setting" />
+            android:title="@string/account_setting" />
         <item
             android:id="@+id/nav_logout"
             android:icon="@drawable/ic_logout"

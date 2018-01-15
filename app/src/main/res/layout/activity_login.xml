@@ -4,8 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    style="@style/background"
     tools:context="com.rupp.yonchando.sayhello.LoginActivity">
+
+    <include layout="@layout/app_bar_main"/>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -44,7 +45,7 @@
                 android:drawableStart="@drawable/ic_email"
                 android:hint="@string/email"
                 android:inputType="textEmailAddress"
-                android:text=""
+                android:text="@string/my_email"
                 android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -63,6 +64,7 @@
                 android:drawableStart="@drawable/ic_password"
                 android:hint="@string/password"
                 android:inputType="textPassword"
+                android:text="@string/my_password"
                 android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

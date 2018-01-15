@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -52,6 +53,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private LoginManager loginButtonManagerFacebook;
     private Button buttonLoginWithGoogle;
     private GoogleSignInClient googleSignInClient;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +63,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         buttonRegister = findViewById(R.id.buttonRegister);
         editTextEmail = findViewById(R.id.editTextEmail);
         editTextPassword = findViewById(R.id.editTextPassword);
+
+        //ToolBar
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Login Account");
+
+
 //        checkBoxRememberMe = findViewById(R.id.checkBoxRemember);
         progressDialog = new ProgressDialog(this);
 
@@ -178,7 +187,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isComplete()) {
-                        Toast.makeText(LoginActivity.this, "Login Success", Toast.LENGTH_SHORT).show();
                         FirebaseUser user = firebaseAuth.getCurrentUser();
                         updateUI(user);
                     }
@@ -188,8 +196,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     public void startActivityMain() {
-        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-        startActivity(intent);
+        Intent main_intent = new Intent(LoginActivity.this, MainActivity.class);
+        main_intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(main_intent);
     }
 
     private void updateUI(FirebaseUser user) {
@@ -215,7 +224,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     // Handle user login to firebaseAuth with info from facebook
-    private void handleFacebookAccessToken(AccessToken token) {
+    private void handleFacebookAccessToken(final AccessToken token) {
         Log.d("FaceBookHandle", "handleFacebookAccessToken:" + token);
 
         showProgressDialog();

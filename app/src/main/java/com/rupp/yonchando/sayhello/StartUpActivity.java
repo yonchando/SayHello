@@ -23,7 +23,8 @@ public class StartUpActivity extends AppCompatActivity {
     }
 
     private void startLoginActivity() {
-        Intent intent = new Intent(this,MainActivity.class);
-        startActivity(intent);
+        Intent main_intent = new Intent(this, MainActivity.class);
+        main_intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(main_intent);
     }
 }
