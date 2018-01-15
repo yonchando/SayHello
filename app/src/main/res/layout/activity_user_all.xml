@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context="com.rupp.yonchando.sayhello.UserAllActivity">
 
-    <include layout="@layout/app_bar_main" android:id="@+id/toolbar"/>
+    <include layout="@layout/app_bar_main"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/userListRecyclerView"
