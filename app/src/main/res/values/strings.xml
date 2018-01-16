@@ -32,7 +32,7 @@
     <string name="send">Send</string>
     <string name="register">Register</string>
     <string name="confirm_password">Confirm Password</string>
-    <string name="email">Email</string>
+    <string name="email">Email@mail.com</string>
     <string name="sent_user">Send User</string>
     <string name="friend">Friends</string>
     <string name="chat">Chat</string>
@@ -43,4 +43,5 @@
     <string name="my_email">yonchando@gmail.com</string>
     <string name="my_password">password</string>
     <string name="all_user">All User</string>
+    <string name="click_change_profile">Click Change Profile</string>
 </resources>
