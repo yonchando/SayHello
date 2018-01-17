@@ -3,7 +3,6 @@ package com.rupp.yonchando.sayhello;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -19,7 +18,6 @@ public class SettingActivity extends AppCompatActivity {
 
     private static final String TAG = "UserData";
     private FirebaseAuth firebaseAuth;
-    private DatabaseReference userReference;
     private TextView settingUsernameTextView;
     private TextView settingEmailTextView;
     private TextView settingPhoneNumberText;
@@ -30,13 +28,15 @@ public class SettingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_setting);
         Toolbar toolbarSetting = findViewById(R.id.toolbar);
         setSupportActionBar(toolbarSetting);
-        getSupportActionBar().setTitle("Setting");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle("Setting");
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
         // View Field
-        settingUsernameTextView = findViewById(R.id.userListUsernameTextView);
-        settingEmailTextView = findViewById(R.id.userListEmailTextView);
-        settingPhoneNumberText = findViewById(R.id.settingPhoneNumberText);
+        settingUsernameTextView = findViewById(R.id.settingUsername);
+        settingEmailTextView = findViewById(R.id.settingEmail);
+        settingPhoneNumberText = findViewById(R.id.settingPhone);
 
         // Firebase Auth
         firebaseAuth = FirebaseAuth.getInstance();
@@ -55,13 +55,20 @@ public class SettingActivity extends AppCompatActivity {
             query.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
-                    Log.d("dataSnap", "Value" + dataSnapshot);
-                    String username = dataSnapshot.child("username").getValue(String.class);
-                    String email = dataSnapshot.child("email").getValue(String.class);
-                    String phoneNumber = dataSnapshot.child("phoneNumber").getValue(String.class);
-//                    settingUsernameTextView.setText(username);
-//                        settingEmailTextView.setText(email);
-//                        settingPhoneNumberText.setText(phoneNumber);
+                    if (dataSnapshot.child("username").getValue() != null) {
+                        String username = dataSnapshot.child("username").getValue(String.class);
+                        settingUsernameTextView.setText(username);
+                    }
+
+                    if (dataSnapshot.child("email").getValue() != null) {
+                        String email = dataSnapshot.child("email").getValue().toString();
+                        settingEmailTextView.setText(email);
+                    }
+
+                    if (dataSnapshot.child("phoneNumber").getValue() != null) {
+                        String phoneNumber = dataSnapshot.child("phoneNumber").getValue().toString();
+                        settingPhoneNumberText.setText(phoneNumber);
+                    }
                 }
 
                 @Override

@@ -52,7 +52,12 @@
         <activity
             android:name=".SettingActivity"
             android:parentActivityName=".MainActivity" />
-        <activity android:name=".UserAllActivity" android:parentActivityName=".MainActivity"/>
+        <activity
+            android:name=".UserAllActivity"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".ProfileActivity"
+            android:parentActivityName=".UserAllActivity" />
     </application>
 
 </manifest>

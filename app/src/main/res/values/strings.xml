@@ -44,4 +44,5 @@
     <string name="my_password">password</string>
     <string name="all_user">All User</string>
     <string name="click_change_profile">Click Change Profile</string>
+    <string name="add_friend">Add Friend</string>
 </resources>
