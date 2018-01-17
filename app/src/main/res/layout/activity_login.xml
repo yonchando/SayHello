@@ -6,11 +6,19 @@
     android:layout_height="match_parent"
     tools:context="com.rupp.yonchando.sayhello.LoginActivity">
 
-    <include layout="@layout/app_bar_main"/>
+    <include
+        android:id="@+id/include"
+        layout="@layout/app_bar_main" />
 
     <ScrollView
+        android:id="@+id/scrollView2"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginTop="57dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
@@ -29,7 +37,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.19"
+                app:layout_constraintVertical_bias="0.14999998"
                 app:srcCompat="@drawable/ic_say_hello" />
 
             <EditText
@@ -71,15 +79,15 @@
                 app:layout_constraintTop_toBottomOf="@+id/editTextEmail" />
 
             <!--<CheckBox-->
-                <!--android:id="@+id/checkBoxRemember"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_marginEnd="8dp"-->
-                <!--android:layout_marginStart="8dp"-->
-                <!--android:text="@string/remember_me"-->
-                <!--app:layout_constraintEnd_toEndOf="parent"-->
-                <!--app:layout_constraintStart_toStartOf="parent"-->
-                <!--app:layout_constraintTop_toBottomOf="@+id/editTextPassword" />-->
+            <!--android:id="@+id/checkBoxRemember"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginEnd="8dp"-->
+            <!--android:layout_marginStart="8dp"-->
+            <!--android:text="@string/remember_me"-->
+            <!--app:layout_constraintEnd_toEndOf="parent"-->
+            <!--app:layout_constraintStart_toStartOf="parent"-->
+            <!--app:layout_constraintTop_toBottomOf="@+id/editTextPassword" />-->
 
             <Button
                 android:id="@+id/buttonLogin"
