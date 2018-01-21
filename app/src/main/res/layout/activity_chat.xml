@@ -7,29 +7,49 @@
     tools:context="com.rupp.yonchando.sayhello.ChatActivity">
 
     <include
+        android:id="@+id/include2"
         layout="@layout/app_bar_main" />
 
     <EditText
-        android:id="@+id/ChatSendSmsTextEdit"
+        android:id="@+id/chatMessageEditText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="4dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginStart="4dp"
+        android:layout_weight="1"
         android:background="@drawable/edit_text"
         android:ems="10"
-        android:hint="@string/message"
+        android:hint="@string/search"
         android:inputType="textPersonName"
+        android:padding="12dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/ChatButtonSend"
+        app:layout_constraintEnd_toStartOf="@+id/chatSendMessageButton"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <Button
-        android:id="@+id/ChatButtonSend"
+    <ImageButton
+        android:id="@+id/chatSendMessageButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="4dp"
-        android:text="@string/send"
+        android:layout_marginEnd="4dp"
+        android:layout_weight="1"
+        android:background="@drawable/edit_text"
+        android:padding="12dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/ic_menu_send"
+        tools:ignore="ContentDescription" />
 
-
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/messageList"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="57dp"
+        android:layout_marginTop="57dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </android.support.constraint.ConstraintLayout>

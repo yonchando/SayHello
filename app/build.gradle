@@ -3,7 +3,7 @@ android {
     compileSdkVersion 26
     defaultConfig {
         applicationId "com.rupp.yonchando.sayhello"
-        minSdkVersion 16
+        minSdkVersion 19
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
@@ -37,6 +37,8 @@ dependencies {
     compile 'com.google.firebase:firebase-auth:11.8.0'
     compile 'com.google.android.gms:play-services-auth:11.8.0'
     compile 'com.facebook.android:facebook-login:4.29.0'
+    compile 'com.miguelcatalan:materialsearchview:1.4.0'
+    compile 'de.hdodenhof:circleimageview:2.2.0'
 
 }
 apply plugin: 'com.google.gms.google-services'

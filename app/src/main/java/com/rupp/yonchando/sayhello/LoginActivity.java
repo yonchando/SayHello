@@ -1,8 +1,11 @@
 package com.rupp.yonchando.sayhello;
 
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -26,11 +29,13 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.database.DatabaseReference;
@@ -56,7 +61,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private LoginManager loginButtonManagerFacebook;
     private Button buttonLoginWithGoogle;
     private GoogleSignInClient googleSignInClient;
-    private Toolbar toolbar;
+    private FirebaseUser user;
+    Toolbar toolbar;
 
     private FirebaseDatabase database;
 
@@ -82,6 +88,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         firebaseAuth = FirebaseAuth.getInstance();
 
+        user = firebaseAuth.getCurrentUser();
         // User Click Login
         buttonLogin.setOnClickListener(this);
 
@@ -110,8 +117,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     protected void onStart() {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
-        FirebaseUser currentUser = firebaseAuth.getCurrentUser();
-        updateUI(currentUser);
+        if (user != null) {
+            updateUI(user);
+        }
     }
 
     @Override
@@ -195,7 +203,35 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isComplete()) {
                         FirebaseUser user = firebaseAuth.getCurrentUser();
-                        updateUI(user);
+
+                        if (user != null) {
+                            updateUI(user);
+                        } else {
+                            hideProgressDialog();
+                            final AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+
+                            builder.setTitle("User doesn't exist");
+                            builder.setMessage("Do you want to register now ?");
+                            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    Intent registerIntent = new Intent(LoginActivity.this, RegisterActivity.class);
+                                    registerIntent.putExtra("email", email);
+                                    startActivity(registerIntent);
+                                }
+                            });
+                            builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    dialogInterface.dismiss();
+                                }
+                            });
+
+                            AlertDialog dialog = builder.show();
+
+                            Toast.makeText(LoginActivity.this, "Login Fail: User doesn't exist,", Toast.LENGTH_SHORT).show();
+                        }
+
                     }
                 }
             });

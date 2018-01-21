@@ -1,8 +1,8 @@
 package com.rupp.yonchando.sayhello;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -12,18 +12,13 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.Layout;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.EditText;
-import android.widget.TextView;
 
 import com.facebook.login.LoginManager;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -37,8 +32,8 @@ public class MainActivity extends AppCompatActivity
     private static final String TAG = "UserData";
     private FirebaseAuth firebaseAuth;
     private DatabaseReference userReference;
-    private TextView usernameTextView;
-    private TextView phoneNumberTextView;
+    private FriendFragment friendFragment;
+    private FirebaseUser user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,18 +44,18 @@ public class MainActivity extends AppCompatActivity
 
         // Firebase Auth
         firebaseAuth = FirebaseAuth.getInstance();
+        friendFragment = new FriendFragment();
 
         // Get Current User
-        FirebaseUser user = firebaseAuth.getCurrentUser();
+        user = firebaseAuth.getCurrentUser();
         if (user != null) {
-            String uid = user.getUid();
-            userReference = FirebaseDatabase.getInstance().getReference().child("Users").child(uid);
+            userReference = FirebaseDatabase.getInstance().getReference().child("Users").child(user.getUid());
             if (userReference != null) {
                 userReference.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        String username = dataSnapshot.child("username").getValue(String.class);
-                        String phoneNumber = dataSnapshot.child("phoneNumber").getValue(String.class);
+                        userReference.child("online").onDisconnect().setValue("false");
+
                     }
 
                     @Override
@@ -85,17 +80,73 @@ public class MainActivity extends AppCompatActivity
         // NavigationView
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        // Martial Search
+//        searchView = findViewById(R.id.search_view);
+//
+//        searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
+//            @Override
+//            public boolean onQueryTextSubmit(String query) {
+//                //Do some magic
+//                return false;
+//            }
+//
+//            @Override
+//            public boolean onQueryTextChange(String newText) {
+//                //Do some magic
+//                return false;
+//            }
+//        });
+//
+//        searchView.setOnSearchViewListener(new MaterialSearchView.SearchViewListener() {
+//            @Override
+//            public void onSearchViewShown() {
+//                //Do some magic
+//            }
+//
+//            @Override
+//            public void onSearchViewClosed() {
+//                //Do some magic
+//            }
+//        });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        // Material Search
+        /*if (requestCode == MaterialSearchView.REQUEST_VOICE && resultCode == RESULT_OK) {
+            ArrayList<String> matches = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+            if (matches != null && matches.size() > 0) {
+                String searchWrd = matches.get(0);
+                if (!TextUtils.isEmpty(searchWrd)) {
+                    searchView.setQuery(searchWrd, false);
+                }
+            }
+
+            return;
+        }*/
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
 
-        FirebaseUser user = firebaseAuth.getCurrentUser();
+        if (user != null) {
+            userReference.child("online").setValue("true");
+        }
         updateUI(user);
-
         ChatFragment chatFragment = new ChatFragment();
         startFragmentReplace(chatFragment);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (user != null) {
+            userReference.child("online").setValue("false");
+        }
     }
 
     @Override
@@ -112,11 +163,20 @@ public class MainActivity extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
+
+        /*MenuItem item = menu.findItem(R.id.action_search);
+        searchView.setMenuItem(item);*/
         return true;
     }
 
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem item) {
+        return super.onOptionsItemSelected(item);
+
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
@@ -125,7 +185,7 @@ public class MainActivity extends AppCompatActivity
             startFragmentReplace(newGroupFragment);
         } else if (id == R.id.nav_friend) {
 
-            FriendFragment friendFragment = new FriendFragment();
+            friendFragment = new FriendFragment();
             startFragmentReplace(friendFragment);
 
         } else if (id == R.id.nav_account_setting) {
@@ -134,12 +194,13 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_logout) {
 
+            if (user != null) {
+                userReference.child("online").setValue("false");
+            }
             // firebaseAuth Logout
             firebaseAuth.signOut();
-
             // Facebook Logout
             LoginManager.getInstance().logOut();
-
             startActivityLogin();
         } else if (id == R.id.nav_chat) {
 

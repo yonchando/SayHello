@@ -27,6 +27,9 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     private TextView profileEmail;
     private Button profileSendSmsButton;
     private String user_id;
+    private String username = null;
+    private String email = null;
+    private String phoneNumber = null;
     private Query query;
 
     @Override
@@ -58,10 +61,6 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                String username = null;
-                String email = null;
-                String phoneNumber = null;
-
                 if (dataSnapshot.child("username").getValue() != null) {
                     username = dataSnapshot.child("username").getValue(String.class);
                 }
@@ -70,13 +69,13 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                     email = dataSnapshot.child("email").getValue(String.class);
                 }
 
-                if (dataSnapshot.child("phoneNumber").getValue() != null) {
-                    phoneNumber = dataSnapshot.child("phoneNumber").getValue(String.class);
-                }
+//                if (dataSnapshot.child("phoneNumber").getValue() != null) {
+//                    phoneNumber = dataSnapshot.child("phoneNumber").getValue(String.class);
+//                }
 
                 profileUsername.setText(username);
                 profileEmail.setText(email);
-                profilePhoneNumber.setText(phoneNumber);
+//                profilePhoneNumber.setText(phoneNumber);
             }
 
             @Override
@@ -106,6 +105,8 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
     private void startNewActivity(Class activityClass) {
         Intent intent = new Intent(ProfileActivity.this, activityClass);
+        intent.putExtra("user_id", user_id);
+        intent.putExtra("username", username);
         startActivity(intent);
     }
 }
